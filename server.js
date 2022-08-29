@@ -1,24 +1,23 @@
 require("dotenv").config();
+const env = process.env;
 const express = require("express");
-const router = require("./router.js");
+const usersRouter = require("./routes/api/users.js");
 
 /* Constants */
 const app = express();
-const port = process.env.SERVER_PORT;
+const port = env.SERVER_PORT;
 
 /* Express settings */
 app.use(express.static("public/dist"));
 app.use(express.json());
-app.use(router);
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/api", (req, res) => {
-    res.send("Hello World!");
-});
+/* API routes */
+app.use("/api/user", usersRouter);
 
 /* Start server listening */
 app.listen(port, () => {
     console.log(`Express server is working on localhost : ${port}`);
 });
 
-
-module.exports = app
+module.exports = app;
