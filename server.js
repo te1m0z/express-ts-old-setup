@@ -1,7 +1,8 @@
 require("dotenv").config();
 const env = process.env;
 const express = require("express");
-const usersRouter = require("./routes/api/users.js");
+const usersRouter = require("./routes/user.js");
+const categoriesRouter = require("./routes/categories.js");
 
 /* Constants */
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 /* API routes */
 app.use("/api/user", usersRouter);
+app.use("/api/categories", categoriesRouter);
 
 /* Start server listening */
 app.listen(port, () => {
