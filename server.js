@@ -3,6 +3,8 @@ const env = process.env;
 const express = require("express");
 const usersRouter = require("./routes/user.js");
 const categoriesRouter = require("./routes/categories.js");
+const postsRouter = require("./routes/posts.js");
+const { initDB } = require('./database.js')
 
 /* Constants */
 const app = express();
@@ -13,9 +15,11 @@ app.use(express.static("public/dist"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 /* API routes */
 app.use("/api/user", usersRouter);
 app.use("/api/categories", categoriesRouter);
+app.use("/api/posts", postsRouter);
 
 /* Start server listening */
 app.listen(port, () => {

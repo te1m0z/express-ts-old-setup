@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getAll, tryCreate, getOne } = require("../services/categoriesService.js");
+const { getAll, tryCreate, getOne } = require("../services/postsService.js");
 
 
 router.get('/', (_, res) => {

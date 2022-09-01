@@ -6,14 +6,14 @@ const getAll = async () => {
 
     try {
 
-        const stmt = db.prepare('SELECT * FROM categories');
-        const result = stmt.all();
+        const getAllPostsStmt = db.prepare('SELECT * FROM posts');
+        const getAllPostsResult = getAllPostsStmt.all();
 
-        if (result.length) {
+        if (getAllPostsResult.length) {
             return Promise.resolve({
                 status: true,
                 success: {
-                    categories: result,
+                    posts: getAllPostsResult,
                     text: 'Данные успешно получены'
                 }
             });
@@ -22,7 +22,7 @@ const getAll = async () => {
         return Promise.reject({
             status: false,
             error: {
-                text: 'Нет ни одной категории'
+                text: 'Нет ни одного поста'
             }
         });
 
@@ -40,37 +40,38 @@ const getAll = async () => {
 
 const tryCreate = async (request) => {
 
-    const name = request.body.name;
+    const title   = request.body.title;
+    const content = request.body.content;
 
-    if (!name) {
+    if (!title || !content) {
         return Promise.reject({
             status: false,
             error: {
-                text: 'Название должно быть заполнено'
+                text: 'Название и содержимое должны быть заполнены'
             }
         });
     }
 
-    const slug = slugify(transliterate(name));
+    const slug = slugify(transliterate(title));
 
     try {
 
-        const getAllCategoriesSlugsStmt = await db.prepare('SELECT * FROM categories WHERE slug = ? LIMIT 1');
-        const getAllCategoriesSlugsResult = await getAllCategoriesSlugsStmt.get(slug);
+        const getAllPostsSlugStmt = await db.prepare('SELECT * FROM posts WHERE slug = ? LIMIT 1');
+        const getAllPostsSlugsResult = await getAllPostsSlugStmt.get(slug);
 
-        if (getAllCategoriesSlugsResult) {
+        if (getAllPostsSlugsResult) {
             return Promise.reject({
                 status: false,
                 error: {
-                    text: 'Такая категория уже есть.'
+                    text: 'Такой пост уже есть'
                 }
             });   
         }
 
-        const tryCreateCategoryStmt = await db.prepare('INSERT INTO categories (name, slug) VALUES (?, ?)');
-        const tryCreateCategoryResult = await tryCreateCategoryStmt.run(name, slug);
+        const tryCreatePostStmt = await db.prepare('INSERT INTO posts (title, content, slug) VALUES (?, ?, ?)');
+        const tryCreatePostResult = await tryCreatePostStmt.run(title, content, slug);
 
-        if (tryCreateCategoryResult.lastInsertRowid) {
+        if (tryCreatePostResult.lastInsertRowid) {
             return Promise.resolve({
                 status: true,
                 success: {

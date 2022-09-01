@@ -8,6 +8,9 @@ const DBSOURCE = "./database/db.sqlite";
 const db = new Database(DBSOURCE);
 
 const initDB = () => {
+
+    console.log('Попытка создать БД');
+
     const createTableSQL = `
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

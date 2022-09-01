@@ -11,7 +11,8 @@
     "better-sqlite3": "^7.6.2",
     "express": "^4.18.1",
     "md5": "^2.3.0",
-    "sqlite3": "^5.0.11"
+    "sqlite3": "^5.0.11",
+    "transliteration": "^2.3.5"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",
