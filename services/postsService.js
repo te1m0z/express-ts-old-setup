@@ -40,8 +40,9 @@ const getAll = async () => {
 
 const tryCreate = async (request) => {
 
-    const title   = request.body.title;
-    const content = request.body.content;
+    const title       = request.body.title;
+    const content     = request.body.content;
+    const category_id = request.body.category_id;
 
     if (!title || !content) {
         return Promise.reject({
@@ -68,8 +69,20 @@ const tryCreate = async (request) => {
             });   
         }
 
-        const tryCreatePostStmt = await db.prepare('INSERT INTO posts (title, content, slug) VALUES (?, ?, ?)');
-        const tryCreatePostResult = await tryCreatePostStmt.run(title, content, slug);
+        const getCategoryIDStmt = await db.prepare('SELECT * FROM categories WHERE id = ? LIMIT 1');
+        const getCategoryIDResult = await getCategoryIDStmt.get(category_id);
+
+        if (!getCategoryIDResult) {
+            return Promise.reject({
+                status: false,
+                error: {
+                    text: 'Такой категории нет'
+                }
+            });   
+        }
+
+        const tryCreatePostStmt = await db.prepare('INSERT INTO posts (title, content, slug, category_id) VALUES (?, ?, ?, ?)');
+        const tryCreatePostResult = await tryCreatePostStmt.run(title, content, slug, category_id);
 
         if (tryCreatePostResult.lastInsertRowid) {
             return Promise.resolve({
@@ -105,22 +118,22 @@ const getOne = async (request) => {
 
     try {
 
-        const getOneCategoryStmt = await db.prepare('SELECT * FROM categories WHERE id = ? LIMIT 1');
-        const getOneCategoryResult = await getOneCategoryStmt.get(id);
+        const getOnePostStmt = await db.prepare('SELECT * FROM posts WHERE id = ? LIMIT 1');
+        const getOnePostResult = await getOnePostStmt.get(id);
 
-        if (!getOneCategoryResult) {
+        if (!getOnePostResult) {
             return Promise.reject({
                 status: false,
                 error: {
-                    text: 'Категория не найдена'
+                    text: 'Пост не найден'
                 }
             });
         } else {
             return Promise.resolve({
                 status: true,
                 success: {
-                    data: getOneCategoryResult,
-                    text: 'Успешно найдено'
+                    data: getOnePostResult,
+                    text: 'Успешно найден'
                 }
             });
         }
