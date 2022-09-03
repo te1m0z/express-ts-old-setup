@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getAll, tryCreate, getOne } = require("../services/postsService.js");
+const { getAll, tryCreate, getOne, deleteOne, patchOne } = require("../services/postsService.js");
 
 
 router.get('/', (_, res) => {
@@ -22,6 +22,18 @@ router.get('/:id', (req, res) => {
         .catch(error => res.status(500).json(error));
 });
 
-router.all("/", (_, res) => res.status(403).end()); 
+router.delete('/:id', (req, res) => {
+    deleteOne(req)
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json(error));
+});
+
+router.patch('/:id', (req, res) => {
+    patchOne(req)
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json(error));
+});
+
+router.all("/", (_, res) => res.status(403).end());
 
 module.exports = router;

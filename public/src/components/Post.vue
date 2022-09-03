@@ -29,7 +29,7 @@ export default {
     created() {
         this.title = this.post.title;
         this.content = this.post.content;
-        this.date = this.post.date;
+        // this.date = this.post.date;
         this.slug = this.post.slug;
     },
 };

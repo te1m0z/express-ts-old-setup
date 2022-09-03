@@ -28,7 +28,11 @@
 
         <TransitionGroup name="posts" :appear="!!posts.length">
             <template v-if="showPosts">
-                <Post v-for="(post, indx) in posts" :key="post.title + indx" :post="post" :data-index="indx" />
+                <Post
+                    v-for="(post, indx) in posts"
+                    :key="post.id"
+                    :post="post"
+                />
             </template>
         </TransitionGroup>
     </div>
@@ -41,8 +45,8 @@ export default {
     name: "PostList",
     data() {
         return {
-            posts: this.$store.getters.getPosts ?? [],
             showPosts: false,
+            posts: this.$store.getters.getPosts
         };
     },
     components: {
@@ -52,7 +56,7 @@ export default {
         if (!this.posts.length) {
             setTimeout(() => {
                 this.$store.dispatch("fetchPosts");
-                this.posts = this.$store.getters.getPosts;
+                // this.posts = this.$store.getters.getPosts;
             }, 1500);
         } else {
             this.showPosts = true;

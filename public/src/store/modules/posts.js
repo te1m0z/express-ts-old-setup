@@ -1,20 +1,21 @@
 export default {
     actions: {
-        fetchPosts({ commit }) {
+        async fetchPosts({ commit }) {
 
-            const posts = [
-                { title: "Заголовок 1", content: `Hello kak dela`, date: "18.19.20", slug: "title-1" },
-                { title: "Заголовок 2", content: "Hello\nkak dela", date: "18.19.20", slug: "title-2" },
-                { title: "Заголовок 3", content: "Hello\nkak dela", date: "18.19.20", slug: "title-3" },
-                { title: "Заголовок 4", content: "Hello\nkak dela", date: "18.19.20", slug: "title-4" },
-                { title: "Заголовок 4", content: "Hello\nkak dela", date: "18.19.20", slug: "title-5" },
-            ];
+            const request = await fetch('http://localhost:5000/api/posts').catch(err => console.log(err));
 
-            commit("setPosts", posts);
+            const response = await request.json();
+
+            
+            if (response.status) {
+                console.log( response.success.posts)
+            }
+            commit("setPosts", response.success.posts);
         },
     },
     mutations: {
         setPosts(state, posts) {
+            console.log('mutations ', posts);
             state.posts = posts;
         },
     },
