@@ -1,44 +1,27 @@
-import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
-import CategoryView from "@/views/CategoryView.vue";
-import PostView from "@/views/PostView.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '@/pages/HomePage.vue'
+import auth from '@/router/auth'
+import categories from '@/router/categories'
+import error from '@/router/error'
+import posts from '@/router/posts'
 
 const routes = [
-    {
-        path: "/",
-        name: "HomeView",
-        component: HomeView,
-    },
-    {
-        path: "/category",
-        redirect: "/",
-    },
-    {
-        path: "/post",
-        redirect: "/",
-    },
-    {
-        path: "/category/:category",
-        name: "CategoryView",
-        component: CategoryView,
-    },
-    {
-        path: "/post/:post",
-        name: "PostView",
-        component: PostView,
-    },
-    {
-        path: "/:catchAll(.*)",
-        name: "NotFound",
-        component: () => import("@/views/NotFound.vue"),
-    },
-];
+	{
+		path: '/',
+		name: 'HomePage',
+		component: HomeView
+	},
+	...auth,
+	...categories,
+	...posts,
+	...error
+]
 
 const routerOptions = {
-    history: createWebHistory(),
-    routes,
-};
+	history: createWebHistory(),
+	routes
+}
 
-const router = createRouter(routerOptions);
+const router = createRouter(routerOptions)
 
-export default router;
+export default router

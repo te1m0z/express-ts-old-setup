@@ -1,100 +1,110 @@
 .container {
-    width: 100%;
-    max-width: 930px;
-    margin: 0 auto;
-    height: 100%;
-    padding: 0 15px;
+	width: 100%;
+	max-width: 930px;
+	margin: 0 auto;
+	height: 100%;
+	padding: 0 15px;
 }
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-    font-family: Avenir, sans-serif;
-    overflow-x: hidden;
-    min-width: 320px;
-    font-size: 18px;
+	font-family: Avenir, sans-serif;
+	overflow-x: hidden;
+	min-width: 320px;
+	font-size: 18px;
 
-    &.modal-open {
-        overflow: hidden;
-    }
+	&.modal-open {
+		overflow: hidden;
+	}
 }
 
 a {
-    color: $black;
+	color: $black;
 }
 
 .blick {
-    position: relative;
-    overflow: hidden;
+	position: relative;
+	overflow: hidden;
 }
 
 .blick::before {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background: linear-gradient(
-        to right,
-        rgb(244, 244, 244) 0%,
-        rgb(234, 234, 234) 30%,
-        rgb(234, 234, 234) 70%,
-        rgb(244, 244, 244) 100%
-    );
-    left: 0;
-    top: 0;
-    transform: translateX(-100%);
-    animation: movingFlare 1.2s ease-in-out infinite;
+	content: '';
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background: linear-gradient(
+		to right,
+		rgb(244, 244, 244) 0%,
+		rgb(234, 234, 234) 30%,
+		rgb(234, 234, 234) 70%,
+		rgb(244, 244, 244) 100%
+	);
+	left: 0;
+	top: 0;
+	transform: translateX(-100%);
+	animation: movingFlare 1.2s ease-in-out infinite;
+}
+
+.error {
+	color: red;
+	border-color: red !important;
+}
+
+.success {
+	color: green;
+	border-color: green !important;
 }
 
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    z-index: 90;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	z-index: 90;
 }
 
 .modal-window {
-    margin: auto;
-    background: #fff;
-    z-index: 92;
+	margin: auto;
+	background: #fff;
+	z-index: 92;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 8px;
+	width: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: transparent;
+	background: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: $blue;
-    border-radius: 20px;
+	background: $blue;
+	border-radius: 20px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: $blue;
+	background: $blue;
 }
 
 @keyframes movingFlare {
-    0% {
-        left: 0;
-        transform: translateX(-100%);
-    }
-    100% {
-        left: 100%;
-        transform: translateX(10%);
-    }
+	0% {
+		left: 0;
+		transform: translateX(-100%);
+	}
+	100% {
+		left: 100%;
+		transform: translateX(10%);
+	}
 }

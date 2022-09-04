@@ -1,10 +1,10 @@
-import { createStore } from "vuex";
-import categories from './modules/categories.js'
-import posts from './modules/posts.js'
+import { createStore } from 'vuex'
+import posts from './modules/posts'
+import auth from './modules/auth'
 
 export default createStore({
-    modules: {
-        categories,
-        posts
-    }
-});
+	modules: {
+		posts,
+		auth
+	}
+})

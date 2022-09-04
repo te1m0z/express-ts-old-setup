@@ -38,7 +38,20 @@ export default {
 <style lang="scss">
 
 .post {
-    margin-bottom: 100px;
+    border: 3px solid rgba(0, 0, 0, 0.05);
+    padding: 14px 20px;
+    border-radius: 20px;
+    transition: 400ms ease;
+    cursor: pointer;
+
+    &:hover {
+        border-color: aqua;
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    & + .post {
+        margin-top: 30px;
+    }
 
     &-header {
         display: flex;
