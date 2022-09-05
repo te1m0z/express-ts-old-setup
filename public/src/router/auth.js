@@ -1,6 +1,6 @@
 export default [
 	{
-		path: '/login',
+		path: '/auth',
 		name: 'LoginPageRoute',
 		component: () => import('@/pages/LoginPage.vue')
 	}

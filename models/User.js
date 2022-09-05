@@ -2,13 +2,16 @@
  * Модель пользователя
  */
 class User {
+	static table = 'users'
 
-	login() {}
+	login() {
+		try {
+		} catch (error) {}
+	}
 
 	update() {}
 
 	logout() {}
-
 }
 
-module.exports = new User()
+module.exports = User

@@ -17,7 +17,7 @@ const tryLogin = async (request, response) => {
 	}
 
 	try {
-		const stmt = db.prepare('SELECT * FROM users WHERE login = ? LIMIT 1')
+		const stmt = db.prepare('SELECT * FROM users WHERE auth = ? LIMIT 1')
 		const result = stmt.get(login)
 
 		console.log('user result: ', result)

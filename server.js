@@ -1,3 +1,5 @@
+'use strict'
+
 /** Импорт модулей Node.js */
 require('dotenv').config()
 const express = require('express')
@@ -7,7 +9,7 @@ const cookieParser = require('cookie-parser')
 /** Импорт модулей приложения */
 const router = require('./routes/index')
 
-// const loginErrorhandler = require('./errors/login/login-error-handler')
+const authErrorhandler = require('./errors/auth/auth-error-handler')
 
 process.env.NODE_ENV = 'production'
 
@@ -26,7 +28,7 @@ app.use(express.static('public/dist'))
 
 app.use('/api', router)
 
-// app.use(loginErrorhandler)
+app.use(authErrorhandler)
 
 try {
 	app.listen(port, 'localhost', () => {

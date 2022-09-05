@@ -16,7 +16,7 @@ const db = new Database(process.env.DB_SOURCE)
 // 	const createTableSQL = `
 //         CREATE TABLE IF NOT EXISTS users (
 //             id INTEGER PRIMARY KEY AUTOINCREMENT,
-//             login TEXT UNIQUE NOT NULL,
+//             auth TEXT UNIQUE NOT NULL,
 //             PASSWORD TEXT NOT NULL
 //         )`
 //
