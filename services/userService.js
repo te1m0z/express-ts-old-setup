@@ -1,4 +1,4 @@
-const { db } = require('../database.js')
+const { db } = require('../src.js')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { generateJWT } = require('../utils/generateAccessToken')
@@ -20,7 +20,7 @@ const tryLogin = async (request, response) => {
 		const stmt = db.prepare('SELECT * FROM users WHERE login = ? LIMIT 1')
 		const result = stmt.get(login)
 
-		console.log(result)
+		console.log('user result: ', result)
 
 		if (result) {
 			const compared = await bcrypt.compare(password, result.password)

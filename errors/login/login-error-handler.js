@@ -1,13 +1,15 @@
 const LoginError = require('./LoginError')
 
-const loginErrorHandler = (err, req, res, next) => {
-	console.log('loginErrorHandler func: ', err)
+const loginErrorHandler = (error, request, response, next) => {
 
-	if (err instanceof LoginError) {
-		return res.status(err.code).json(err.message)
+	if (error instanceof LoginError) {
+		return response.status(error.code).json({
+			code: error.code,
+			...error.message
+		})
 	}
 
-	res.status(500).json('something went wrong')
+	response.status(500).json('something went wrong')
 }
 
 module.exports = loginErrorHandler

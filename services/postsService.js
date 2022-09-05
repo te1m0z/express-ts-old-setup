@@ -1,4 +1,4 @@
-const { db } = require('../database.js');
+const { db } = require('../src.js');
 const { transliterate, slugify } = require('transliteration');
 
 
