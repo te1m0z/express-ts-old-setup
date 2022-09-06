@@ -3,36 +3,37 @@
 /** Импорт модулей Node.js */
 require('dotenv').config()
 const express = require('express')
-const cors = require('cors')
 const cookieParser = require('cookie-parser')
 
-/** Импорт модулей приложения */
+/** Импорт написанных модулей для приложения */
 const router = require('./routes/index')
+const cors = require('./config/cors')
 
+/** Импорт вспомогательный модулей */
 const authErrorhandler = require('./errors/auth/auth-error-handler')
 
-process.env.NODE_ENV = 'production'
+// process.env.NODE_ENV = 'production'
 
 const app = express()
-const port = process.env.SERVER_PORT
 
-app.use(
-	cors({
-		origin: 'http://localhost:8080'
-	})
-)
+app.use(cors)
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public/dist'))
 
+/** Установка роутера */
 app.use('/api', router)
 
+/** Установка обработчиков ошибок / логирования и тп. */
 app.use(authErrorhandler)
 
+/** Попытка запустить сервер */
 try {
-	app.listen(port, 'localhost', () => {
-		console.log(`Express server is working on localhost : ${port}`)
+	app.listen(process.env.SERVER_PORT, 'localhost', () => {
+		console.log(
+			`Express server is working on localhost : ${process.env.SERVER_PORT}`
+		)
 	})
 } catch (error) {
 	console.log('Express server has crashed with error: ', error.message)

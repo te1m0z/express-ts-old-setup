@@ -1,7 +1,7 @@
 class AuthError {
 	constructor(code, data) {
 		this.code = code
-		this.data = data
+		this.answer = data
 	}
 
 	static badRequest(data) {

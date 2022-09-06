@@ -2,20 +2,25 @@ const Validator = require('../Validator')
 const AuthError = require('../../errors/auth/AuthError')
 
 class LoginValidator extends Validator {
-	static async checkCredentials(request, data) {
-		const loginAndPasswordExists = this.checkRequestBody(request, data)
-
-		if (loginAndPasswordExists) {
-			return Promise.resolve({
-				valid: true
+	/**
+	 * Проверка на существование логина и пароля в запросе
+	 */
+	static checkForEmptyLoginAndPassword(request, data) {
+		return this.checkRequestBody(request, data)
+			.then((response) =>
+				Promise.resolve({
+					...response,
+					login: request.body.login,
+					password: request.body.password
+				})
+			)
+			.catch((error) => {
+				return Promise.reject({
+					...error,
+					handler: 'badRequest',
+					message: 'Логин и пароль должны быть заполнены'
+				})
 			})
-		}
-
-		return Promise.reject({
-			valid: false,
-			handler: 'badRequest',
-			message: 'логин и пароль должны быть'
-		})
 	}
 }
 

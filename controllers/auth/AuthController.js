@@ -1,11 +1,12 @@
 const AuthError = require('../../errors/auth/AuthError')
-const LoginValidator = require('../../services/auth/LoginValidator')
+const loginValidator = require('../../services/auth/LoginValidator')
 const User = require('../../models/User')
 const API = require('../../services/API')
+const JWT = require('../../services/JWT')
 
 class AuthController {
 	/**
-	 * Метод входа, обязанности:
+	 * Метод входа:
 	 *    - проверить наличие данных
 	 *    - проверить совпадение логина / пароля
 	 *    - сгенерировать токен доступа
@@ -13,15 +14,25 @@ class AuthController {
 	 *    - отдать ответ на клиент
 	 */
 	async login(req, res, next) {
-		LoginValidator.checkCredentials(req, ['login', 'password'])
-			.then()
+		await loginValidator
+			.checkForEmptyLoginAndPassword(req, ['login', 'password'])
+			.then(({ login }) => {
+				return API.queryOne(
+					`SELECT * FROM ${User.table} WHERE login = @login LIMIT 1`,
+					{ login }
+				)
+			})
+			.then((data) => {
+				return JWT.create(data)
+			})
 			.catch((error) => {
+				if (error.serverAlert) {
+					console.log('error.serverAlert: ', error.serverAlert)
+				}
 				next(
 					AuthError[error.handler]({
-						answer: {
-							status: false,
-							message: error.message
-						}
+						status: false,
+						message: error.message
 					})
 				)
 			})
