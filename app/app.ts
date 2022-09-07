@@ -10,7 +10,7 @@ import router from './routes'
 class App {
 	public app: express.Application
 	public port: number
-	public host?: string
+	public host: string
 	public env: string
 	public static path: string = path.resolve(__dirname)
 
@@ -18,17 +18,15 @@ class App {
 	constructor() {
 		this.app = express()
 		this.port = Number(process.env.SERVER_PORT)
-		this.host = process.env.SERVER_HOST
+		this.host = process.env.SERVER_HOST || 'localhost'
 		this.env = process.env.NODE_ENV || 'development'
 
 		this.init()
 	}
 
 	public listen() {
-		this.app.listen(this.port, (this.host = 'localhost'), (): void => {
-			console.log(
-				`Express server is working on https://localhost:${this.port}/`
-			)
+		this.app.listen(this.port, this.host, (): void => {
+			console.log(`Start at https://localhost:${this.port}/`)
 		})
 	}
 
@@ -46,9 +44,5 @@ class App {
 		this.app.use('/api', router)
 	}
 }
-
-const a = 'hello'
-
-export { a }
 
 export default App

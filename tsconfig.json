@@ -1,12 +1,13 @@
 {
 	"compilerOptions": {
-		"target": "es6",
+		"target": "ES2016",
 		"outDir": "./dist",
-		"module": "commonjs",
-		"strict": true,
+		"module": "CommonJS",
+		// "strict": true,
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
+		// "allowSyntheticDefaultImports": true,
 		"baseUrl": "./app",
-		"suppressImplicitAnyIndexErrors": true
+		"suppressImplicitAnyIndexErrors": true,
+		"importHelpers": true
 	}
 }

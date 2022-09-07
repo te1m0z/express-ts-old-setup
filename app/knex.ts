@@ -1,11 +1,11 @@
 import 'dotenv/config'
 import App from './app'
-import Knex from 'knex'
-import { Knex as IKnex } from 'knex/types/index'
+// import Knex from 'knex'
+// import { Knex as IKnex } from 'knex/types/index'
 
-console.log(App)
+console.log('App1: ', App)
 
-export default 100
+export default 'hello'
 
 // const a = Knex({
 // 	client: 'sqlite3',
