@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"target": "es6",
+		"outDir": "./dist",
+		"module": "commonjs",
+		"strict": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": "./app",
+		"suppressImplicitAnyIndexErrors": true
+	}
+}

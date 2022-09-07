@@ -1,13 +1,13 @@
-const { Router } = require('express')
+import { IRouter, Router, Request, Response, NextFunction, Send } from 'express'
 
-const usersRouter = require('./users')
+import usersRouter from './users'
 // const postsRouter = require('./posts/posts')
 // const categoriesRouter = require('./categories/categories')
 
-const apiRouter = Router()
+const apiRouter: IRouter = Router()
 
 apiRouter.use('/users', usersRouter)
 // apiRouter.use('/posts', postsRouter)
 // apiRouter.use('/categories', categoriesRouter)
 
-module.exports = apiRouter
+export default apiRouter
