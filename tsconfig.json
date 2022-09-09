@@ -1,13 +1,14 @@
 {
+	"compileOnSave": false,
 	"compilerOptions": {
 		"target": "ES2016",
 		"outDir": "./dist",
 		"module": "CommonJS",
-		// "strict": true,
+		"noImplicitAny": false,
+		"strict": true,
 		"esModuleInterop": true,
-		// "allowSyntheticDefaultImports": true,
-		"baseUrl": "./app",
-		"suppressImplicitAnyIndexErrors": true,
-		"importHelpers": true
+		"moduleResolution": "Node",
+		"allowSyntheticDefaultImports": true,
+		"baseUrl": "./app"
 	}
 }

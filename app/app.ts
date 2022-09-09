@@ -35,13 +35,13 @@ class App {
 	}
 
 	private init() {
-		this.app.disable('x-powered-by')
 		this.app.use(cors)
 		this.app.use(cookieParser())
 		this.app.use(express.json())
 		this.app.use(express.urlencoded({ extended: true }))
 		this.app.use(express.static('public/dist'))
 		this.app.use('/api', router)
+		this.app.disable('x-powered-by')
 	}
 }
 

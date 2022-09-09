@@ -5,8 +5,10 @@
   "main": "./app/server.ts",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\""
+    "start": "ts-node-dev --watch --clear --debug app/server.ts",
+    "dev": "concurrently --kill-others \"tsc -w\" \"nodemon dist/server.js\"",
+    "knex:migrate": "knex --knexfile alalal.js  migrate:latest",
+    "knex:seed": "knex --knexfile alalal.js  seed:run"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -17,7 +19,9 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.3.0",
     "sqlite3": "^5.0.11",
-    "transliteration": "^2.3.5"
+    "transliteration": "^2.3.5",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import knex from '../../knex'
+import knex from '../../database/connection'
 
 // const AuthError = require('../../errors/auth/AuthError')
 // const loginValidator = require('../../services/auth/LoginValidator')
@@ -16,9 +16,21 @@ class AuthController {
 	 *    - положить токен в куки
 	 *    - отдать ответ на клиент
 	 */
-	static login(req: Request, res: Response, next: NextFunction): void {
-		console.log(knex)
-		res.json({ ts: true })
+	static async login(
+		req: Request,
+		res: Response,
+		next: NextFunction
+	): Promise<void> {
+		interface User {
+			id: number
+			login: string
+			password: number
+		}
+
+		const users = await knex<User[]>('users').select('*')
+
+		res.json({ ts: 10, users: users })
+
 		// loginValidator
 		// 	.checkForEmptyLoginAndPassword(req, ['login', 'password'])
 		// 	.then(({ login }) => {
