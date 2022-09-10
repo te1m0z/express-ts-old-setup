@@ -7,10 +7,10 @@ import router from './routes'
 import { authErrorHandler } from './errors/auth/auth-error-handler'
 
 export class App {
-	public app: express.Application
-	public port: number
-	public host: string
-	public env: string
+	public readonly app: express.Application
+	public readonly port: number
+	public readonly host: string
+	public readonly env: string
 
 	// routes: Routes[]
 	constructor() {

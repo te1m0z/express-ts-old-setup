@@ -1,23 +1,23 @@
 interface IAuthErrorHandler {
-	code: number
-	answer: object
+	status: true
+	answer: {
+		message: string,
+		data: object | object[]
+	}
 }
 
 export class AuthError {
-	private code: number
-	private answer: any
+	private data: any
 
 	constructor(data: IAuthErrorHandler) {
-		console.log(data)
-		this.code = data.code
-		this.answer = data.answer
+		this.data = data
 	}
 
 	static badRequest(data) {
-		return new AuthError({ code: 400, ...data })
+		return new AuthError(data)
 	}
 
 	static internal(data) {
-		return new AuthError({ code: 500, ...data })
+		return new AuthError(data)
 	}
 }

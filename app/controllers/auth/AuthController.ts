@@ -1,32 +1,26 @@
-import { NextFunction, Request, Response } from 'express'
-
-import { AuthError } from '../../errors/auth/AuthError'
+import { NextFunction as Next, Request, Response } from 'express'
+import { ApiResponseError } from '../../interfaces/ApiResponse'
 import { checkReqBody } from '../../helpers/Validator'
 import { compareCredentials } from '../../helpers/API'
-import { ApiResponseError } from '../../interfaces/ApiResponse'
+import { generateToken } from '../../utils/generateAccessToken'
+import { setCookies } from '../../helpers/Cookies'
 
-type IAuthController = {
-	login?: (req: Request, res: Response, next: NextFunction) => void
-}
-
-abstract class AuthController implements IAuthController {
+export abstract class AuthController {
 
 	/** Метод входа:
 	 *    + проверить наличие данных
 	 *    + проверить совпадение логина / пароля
-	 *    - сгенерировать токен доступа
-	 *    - положить токен в куки
-	 *    - отдать ответ на клиент
+	 *    + сгенерировать токен доступа
+	 *    + положить токен в куки
+	 *    + отдать ответ на клиент
 	 */
-	static login(req: Request, res: Response, next: NextFunction): void {
+	static login(req: Request, res: Response, next: Next): void {
 
 		checkReqBody(req, ['login', 'password'])
-			.then(({ answer }) => compareCredentials(answer.data))
-			.then((response) => res.json(response))
-			.catch((error: ApiResponseError) => {
-				next(AuthError[error.handler](error))
-			})
+			.then((result) => compareCredentials(result.answer.data))
+			.then((result) => generateToken(result.answer.data))
+			.then((result) => setCookies(res, { token: result.answer.data.token }, result))
+			.then((result) => res.json(result))
+			.catch((err: ApiResponseError) => next(err))
 	}
 }
-
-export default AuthController

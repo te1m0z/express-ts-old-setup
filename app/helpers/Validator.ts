@@ -63,7 +63,7 @@ export const checkReqBody = (request: Request, data: string[]): Promise<IPromise
 		} else {
 			return reject({
 				status: false,
-				handler: 'badRequest',
+				// handler: 'badRequest',
 				answer: {
 					message: 'Все поля должны быть заполнены'
 				}

@@ -13,7 +13,7 @@ export const compareCredentials = async ({ login, password }: ICredentials): Pro
 	if (!login || !password) {
 		return Promise.reject({
 			status: false,
-			handler: 'badRequest',
+			// handler: 'badRequest',
 			answer: {
 				message: 'Все поля должны быть заполнены'
 			}
@@ -25,9 +25,9 @@ export const compareCredentials = async ({ login, password }: ICredentials): Pro
 	if (!user) {
 		return Promise.reject({
 			status: false,
-			handler: 'badRequest',
+			// handler: 'badRequest',
 			answer: {
-				message: 'Такого пользователя нет'
+				message: 'Неправильный логин или пароль'
 			}
 		})
 	}
@@ -37,15 +37,18 @@ export const compareCredentials = async ({ login, password }: ICredentials): Pro
 			resolve({
 				status: true,
 				answer: {
-					message: 'Данные правильно введены',
-					data: { id: user.id, login: user.login }
+					message: 'Вы успешно вошли',
+					data: {
+						id: user.id,
+						login: user.login
+					}
 				}
 			})
 		} else {
 			reject({
 				status: false,
-				answer: { message: 'Неправильный логин или пароль' },
-				handler: 'badRequest'
+				// handler: 'badRequest',
+				answer: { message: 'Неправильный логин или пароль' }
 			})
 		}
 	})
