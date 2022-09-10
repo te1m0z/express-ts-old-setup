@@ -1,6 +1,7 @@
-const path = require('path')
+import type { Knex } from 'knex'
+import path from 'path'
 
-const config = {
+const config: { [key: string]: Knex.Config } = {
 	development: {
 		client: 'sqlite3',
 		connection: {
@@ -13,6 +14,9 @@ const config = {
 		},
 		migrations: {
 			directory: path.resolve(__dirname, 'app', 'database', 'migrations')
+		},
+		seeds: {
+			directory: path.resolve(__dirname, 'app', 'database', 'seeds')
 		},
 		useNullAsDefault: true
 	},

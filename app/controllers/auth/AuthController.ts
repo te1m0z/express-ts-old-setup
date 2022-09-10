@@ -1,58 +1,31 @@
-import { Request, Response, NextFunction } from 'express'
-import knex from '../../database/connection'
+import { NextFunction, Request, Response } from 'express'
 
-// const AuthError = require('../../errors/auth/AuthError')
-// const loginValidator = require('../../services/auth/LoginValidator')
-// const User = require('../../models/User')
-// const API = require('../../services/API')
-// const JWT = require('../../services/JWT')
+import { AuthError } from '../../errors/auth/AuthError'
+import { checkReqBody } from '../../helpers/Validator'
+import { compareCredentials } from '../../helpers/API'
+import { ApiResponseError } from '../../interfaces/ApiResponse'
 
-class AuthController {
-	/**
-	 * Метод входа:
-	 *    - проверить наличие данных
-	 *    - проверить совпадение логина / пароля
+type IAuthController = {
+	login?: (req: Request, res: Response, next: NextFunction) => void
+}
+
+abstract class AuthController implements IAuthController {
+
+	/** Метод входа:
+	 *    + проверить наличие данных
+	 *    + проверить совпадение логина / пароля
 	 *    - сгенерировать токен доступа
 	 *    - положить токен в куки
 	 *    - отдать ответ на клиент
 	 */
-	static async login(
-		req: Request,
-		res: Response,
-		next: NextFunction
-	): Promise<void> {
-		interface User {
-			id: number
-			login: string
-			password: number
-		}
+	static login(req: Request, res: Response, next: NextFunction): void {
 
-		const users = await knex<User[]>('users').select('*')
-
-		res.json({ ts: 10, users: users })
-
-		// loginValidator
-		// 	.checkForEmptyLoginAndPassword(req, ['login', 'password'])
-		// 	.then(({ login }) => {
-		// 		return API.queryOne(
-		// 			`SELECT * FROM ${User.table} WHERE login = @login LIMIT 1`,
-		// 			{ login }
-		// 		)
-		// 	})
-		// 	.then((data) => {
-		// 		return JWT.create(data)
-		// 	})
-		// 	.catch((error) => {
-		// 		if (error.serverAlert) {
-		// 			console.log('error.serverAlert: ', error.serverAlert)
-		// 		}
-		// 		next(
-		// 			AuthError[error.handler]({
-		// 				status: false,
-		// 				message: error.message
-		// 			})
-		// 		)
-		// 	})
+		checkReqBody(req, ['login', 'password'])
+			.then(({ answer }) => compareCredentials(answer.data))
+			.then((response) => res.json(response))
+			.catch((error: ApiResponseError) => {
+				next(AuthError[error.handler](error))
+			})
 	}
 }
 

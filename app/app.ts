@@ -1,18 +1,16 @@
 import 'dotenv/config'
-import path from 'path'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 
 import cors from './config/cors'
-// import Routes from './interfaces/routes.interface'
 import router from './routes'
+import { authErrorHandler } from './errors/auth/auth-error-handler'
 
-class App {
+export class App {
 	public app: express.Application
 	public port: number
 	public host: string
 	public env: string
-	public static path: string = path.resolve(__dirname)
 
 	// routes: Routes[]
 	constructor() {
@@ -25,9 +23,13 @@ class App {
 	}
 
 	public listen() {
-		this.app.listen(this.port, this.host, (): void => {
-			console.log(`Start at https://localhost:${this.port}/`)
-		})
+		try {
+			this.app.listen(this.port, this.host, (): void => {
+				console.log(`Start at https://localhost:${this.port}/`)
+			})
+		} catch (err: any) {
+			console.log('Error on start server: ', err.message)
+		}
 	}
 
 	public getServer() {
@@ -41,8 +43,7 @@ class App {
 		this.app.use(express.urlencoded({ extended: true }))
 		this.app.use(express.static('public/dist'))
 		this.app.use('/api', router)
+		this.app.use(authErrorHandler)
 		this.app.disable('x-powered-by')
 	}
 }
-
-export default App
