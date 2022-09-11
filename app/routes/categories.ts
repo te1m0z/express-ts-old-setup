@@ -4,10 +4,8 @@ const router = express.Router()
 const {
 	getAll,
 	tryCreate,
-	getOne,
-	deleteOne,
-	patchOne
-} = require('../../services/postsService.js')
+	getOne
+} = require('../services/categoriesService.js')
 
 router.get('/', (_, res) => {
 	getAll()
@@ -23,18 +21,6 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
 	getOne(req)
-		.then((result) => res.status(200).json(result))
-		.catch((error) => res.status(500).json(error))
-})
-
-router.delete('/:id', (req, res) => {
-	deleteOne(req)
-		.then((result) => res.status(200).json(result))
-		.catch((error) => res.status(500).json(error))
-})
-
-router.patch('/:id', (req, res) => {
-	patchOne(req)
 		.then((result) => res.status(200).json(result))
 		.catch((error) => res.status(500).json(error))
 })

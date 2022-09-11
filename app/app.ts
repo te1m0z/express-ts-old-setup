@@ -30,10 +30,13 @@ export class App {
 	public listen() {
 		try {
 			this.app.listen(this.port, this.host, (): void => {
-				console.log(`Start at https://localhost:${this.port}/`)
+				console.log(`Сервер запущен на https://localhost:${this.port}/`)
 			})
 		} catch (err: any) {
-			console.log('Error on start server: ', err.message)
+			this.getLogger().log({
+				level: 'error',
+				message: 'Ошибка запустить сервер: ' + err.message
+			})
 		}
 	}
 
