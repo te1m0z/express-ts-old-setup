@@ -5,6 +5,7 @@
   ],
   "jsRules": {},
   "rules": {
+    "no-console": false,
     "linebreak-style": true,
     "indent": [
       true,

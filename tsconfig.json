@@ -9,6 +9,9 @@
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./app"
+    "baseUrl": "./app",
+    "lib": [
+      "ES2021.String"
+    ]
   }
 }

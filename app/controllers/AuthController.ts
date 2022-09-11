@@ -1,9 +1,9 @@
 import { NextFunction as Next, Request, Response } from 'express'
-import { ApiResponseError } from '../../interfaces/ApiResponse'
-import { checkReqBody } from '../../helpers/Validator'
-import { compareCredentials } from '../../helpers/API'
-import { generateToken } from '../../utils/generateAccessToken'
-import { setCookies } from '../../helpers/Cookies'
+import { ApiResponseError } from '../interfaces/ApiResponse'
+import { checkReqBody } from '../helpers/Validator'
+import { compareCredentials } from '../helpers/API'
+import { generateToken } from '../utils/generateAccessToken'
+import { setCookies } from '../helpers/Cookies'
 
 export abstract class AuthController {
 

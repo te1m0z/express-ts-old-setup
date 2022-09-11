@@ -1,5 +1,5 @@
 import { IRouter, Router } from 'express'
-import { AuthController } from '../../controllers/auth/AuthController'
+import { AuthController } from '../../controllers/AuthController'
 
 const usersRouter: IRouter = Router()
 
