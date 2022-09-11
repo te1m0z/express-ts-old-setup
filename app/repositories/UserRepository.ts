@@ -1,9 +1,8 @@
-import knex from '../database/connection'
 import { IUser } from '../interfaces/User'
+import knex from '../database/connection'
+import { User } from '../models/User'
 
-export abstract class User {
-
-	static table: string = 'users'
+export class UserRepository extends User {
 
 	static async checkExists(login: string): Promise<boolean | IUser> {
 

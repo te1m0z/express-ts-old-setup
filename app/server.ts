@@ -1,7 +1,6 @@
 import 'dotenv/config'
-import { App } from './app'
+import { App, IApp } from './app'
 
-export const app = new App()
+export const app: IApp = new App()
 
 app.listen()
-

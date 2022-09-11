@@ -5,12 +5,7 @@ const config: { [key: string]: Knex.Config } = {
 	development: {
 		client: 'sqlite3',
 		connection: {
-			filename: path.resolve(
-				__dirname,
-				'app',
-				'database',
-				'database.sqlite'
-			)
+			filename: path.resolve(__dirname, 'app', 'database', 'database.sqlite')
 		},
 		migrations: {
 			directory: path.resolve(__dirname, 'app', 'database', 'migrations')
