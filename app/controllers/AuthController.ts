@@ -1,4 +1,10 @@
-import { NextFunction as Next, Request, Response } from 'express'
+import { NextFunction as Next, Request } from 'express'
+// import { checkReqBody } from '../helpers/Validator'
+// import { compareCredentials } from '../helpers/API'
+// import { generateToken } from '../utils/generateAccessToken'
+// import { setCookies } from '../helpers/Cookies'
+// import { ApiResponseError } from '../interfaces/ApiResponse'
+import { IPromisedResponse } from '../interfaces/IResponsePromise'
 
 export class AuthController {
 
@@ -9,22 +15,21 @@ export class AuthController {
 	 *    - положить токен в куки
 	 *    - отдать ответ на клиент
 	 */
-	static login(req: Request, res: Response, next: Next): void {
+	static login(req: Request, res: IPromisedResponse, next: Next): void {
 
-		// Promise.all([
-		// 	checkReqBody(req, ['login', 'password']),
-		// 	(a) => b(a)
-		// ]).then((result) => {
-		// 	res.json({ errors: result })
-		// }, (err: ApiResponseError) => {
-		// 	next(err)
-		// })
+		const a = res.promise({ name: 'dima' })
+		
+		console.log(a)
+
+		res.send('hello')
 
 		// checkReqBody(req, ['login', 'password'])
 		// 	.then((result) => compareCredentials(result.answer.data))
 		// 	.then((result) => generateToken(result.answer.data))
-		// 	.then((result) => setCookies(res, { token: result.answer.data.token }, result))
-		// 	.then((result) => res.json<IPromiseApiRe	sponse>(result))
+		// 	.then((result) =>
+		// 		setCookies(res, { token: result.answer.data.token }, result)
+		// 	)
+		// 	.then((result) => res.json(result))
 		// 	.catch((err: ApiResponseError) => next(err))
 	}
 }

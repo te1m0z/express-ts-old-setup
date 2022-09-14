@@ -14,19 +14,18 @@ import AppRouter from './routes/AppRouter'
 /** middlewares */
 import { loggerMiddleware } from './middlewares/LoggerMiddleware'
 import { errorMiddleware } from './middlewares/ErrorMiddleware'
+import { promiseMiddleware } from './middlewares/PromiseMiddleware'
 
 export type IApp = {
-	logger: Logger
-	listen: () => void
-	getLogger: () => Logger
-}
-
+	logger: Logger;
+	listen: () => void;
+	getLogger: () => Logger;
+};
 
 /**
  * Главный класс приложения
  */
 export class App implements IApp {
-
 	private readonly app: IApplication
 	private readonly port: number
 	private readonly host: string
@@ -62,6 +61,8 @@ export class App implements IApp {
 		this.app.use(cookieParser())
 		this.app.use(express.json())
 		this.app.use(express.urlencoded({ extended: true }))
+		// @ts-ignore
+		this.app.use(promiseMiddleware())
 		this.app.disable('x-powered-by')
 	}
 
